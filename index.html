@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Car Booking System</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="boxes">
+        <form id="authForm">
+            <h2 id="authTitle">Login</h2>
+            <label for="email">Email:</label>
+            <input type="email" id="email" required><br><br>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" required><br><br>
+
+            <button type="button" onclick="handleAuth()">Login</button>
+            <p id="toggleAuth">
+                New user? <a href="#" onclick="toggleAuth()">Sign Up</a>
+            </p>
+        </form>
+
+        <form id="bookingForm" class="hidden">
+            <h2>Car Booking</h2>
+            
+            <!-- Filter Choices -->
+            <label for="brand">Car Brand:</label>
+            <select id="brand">
+                <option value="">-- Select Brand --</option>
+                <option value="Volvo">Volvo</option>
+                <option value="BMW">BMW</option>
+                <option value="Audi">Audi</option>
+                <option value="Toyota">Toyota</option>
+            </select><br><br>
+
+            <label for="size">Car Size:</label>
+            <select id="size">
+                <option value="">-- Select Size --</option>
+                <option value="Combi">Combi</option>
+                <option value="SUV">SUV</option>
+            </select><br><br>
+
+            <label for="fuelType">Fuel Type:</label>
+            <select id="fuelType">
+                <option value="">-- Select Fuel Type --</option>
+                <option value="Fuel">Fuel</option>
+                <option value="Electric">Electric</option>
+            </select><br><br>
+
+            <!-- Car Selection -->
+            <label for="carId">Car ID:</label>
+            <input type="text" id="carId" name="carId"><br><br>
+
+            <label for="dateFrom">Booking From:</label>
+            <input type="date" id="dateFrom" name="dateFrom"><br><br>
+
+            <label for="dateTo">Booking To:</label>
+            <input type="date" id="dateTo" name="dateTo"><br><br>
+
+            <button type="button" onclick="fetchFilteredCars()">Search Cars</button>
+            <button type="button" onclick="submitBooking()">Add Booking</button>
+            <button type="button" onclick="fetchBookings()">Show Bookings</button>
+        </form>
+    </div>
+
+    <div class="cont">
+        <table id="bookingTable">
+            <thead>
+                <tr>
+                    <th>Booking ID</th>
+                    <th>User ID</th>
+                    <th>Car ID</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data will be dynamically populated -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        let isLogin = true;
+
+        function toggleAuth() {
+            isLogin = !isLogin;
+            document.getElementById("authTitle").innerText = isLogin ? "Login" : "Sign Up";
+            document.querySelector("#authForm button").innerText = isLogin ? "Login" : "Sign Up";
+            document.getElementById("toggleAuth").innerHTML = isLogin
+                ? 'New user? <a href="#" onclick="toggleAuth()">Sign Up</a>'
+                : 'Already have an account? <a href="#" onclick="toggleAuth()">Login</a>';
+        }
+
+        function handleAuth() {
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+
+            if (!email || !password) {
+                alert("⚠️ Please fill in all fields!");
+                return;
+            }
+
+            let endpoint = isLogin ? "/api/login" : "/api/signup";
+            let userData = { email: email, password: password };
+
+            fetch(`http://yourserver.com${endpoint}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(userData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    alert("✅ " + (isLogin ? "Logged in successfully!" : "Account created!"));
+                    document.getElementById("authForm").classList.add("hidden");
+                    document.getElementById("bookingForm").classList.remove("hidden");
+                } else {
+                    alert("❌ Error: " + data.message);
+                }
+            })
+            .catch(error => alert("❌ An error occurred: " + error));
+        }
+
+        function fetchFilteredCars() {
+            let brand = document.getElementById("brand").value;
+            let size = document.getElementById("size").value;
+            let fuelType = document.getElementById("fuelType").value;
+
+            let queryParams = `?brand=${brand}&size=${size}&fuelType=${fuelType}`;
+
+            fetch(`http://yourserver.com/api/get_cars${queryParams}`)
+            .then(response => response.json())
+            .then(data => {
+                alert("✅ Cars fetched successfully!");
+                console.log(data);  // Display in console for debugging
+            })
+            .catch(error => console.error("Error fetching cars:", error));
+        }
+
+        function submitBooking() {
+            let userId = document.getElementById("userId").value;
+            let carId = document.getElementById("carId").value;
+            let dateFrom = document.getElementById("dateFrom").value;
+            let dateTo = document.getElementById("dateTo").value;
+
+            if (!userId || !carId || !dateFrom || !dateTo) {
+                alert("⚠️ Please fill in all fields!");
+                return;
+            }
+
+            let bookingData = { user_id: userId, car_id: carId, date_from: dateFrom, date_to: dateTo };
+
+            fetch('http://yourserver.com/api/add_booking', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(bookingData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "Booking added successfully") {
+                    alert("✅ Booking confirmed!");
+                    document.getElementById("bookingForm").reset();
+                } else {
+                    alert("⚠️ Error: " + data.error);
+                }
+            })
+            .catch(error => alert("❌ An error occurred: " + error));
+        }
+
+        function fetchBookings() {
+            fetch('http://yourserver.com/api/get_bookings')
+            .then(response => response.json())
+            .then(data => {
+                let tblBody = document.getElementById("bookingTable").getElementsByTagName('tbody')[0];
+                tblBody.innerHTML = ""; // Clear table
+                data.forEach(function(booking) {
+                    let row = `<tr>
+                        <td>${booking.booking_id}</td>
+                        <td>${booking.user_id}</td>
+                        <td>${booking.car_id}</td>
+                        <td>${booking.date_from}</td>
+                        <td>${booking.date_to}</td>
+                        <td>${booking.status}</td>
+                    </tr>`;
+                    tblBody.innerHTML += row;
+                });
+            })
+            .catch(error => console.error("Error fetching bookings:", error));
+        }
+    </script>
+
+</body>
+</html>

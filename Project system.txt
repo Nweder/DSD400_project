@@ -1,1 +1,47 @@
-system
+System Design - Car Booking Site
+
+
+1. A Description of the System
+The system is a car booking website that allows users to rent vehicles. The platform provides an intuitive interface where customers can browse available cars, apply filters based on their preferences, and make bookings securely. The system will have user authentication, a booking management system, and an administrative interface for managing car availability.
+
+
+
+
+2. A Description of the Various Parts
+The system consists of the following key components:
+Frontend (User Interface)
+•	Homepage: A landing page with an overview of the service.
+•	Booking Page: Allows users to search for and filter cars.
+•	Filters:
+o	Size: Small, Medium, Large.
+o	Type: Electric, Fuel-based.
+o	Brand: Various car manufacturers.
+o	Transmission: Automatic or Manual.
+•	About Us Page: Information about the company.
+•	Contact Page: Users can reach out for inquiries.
+Backend (Server-side Logic)
+•	Authentication System: User registration and login functionality.
+•	Car Management: Allows admins to add, remove, and update car details.
+•	Booking System: Handles reservation requests and availability checks.
+•	Payment Gateway: Secure online payment processing. (Maybe) 
+•	Database: Stores user information, bookings, and car details. (SQL)
+Database Structure (ER Model) & URL Structure
+•	Users (user_id, name, email, password, phone)
+•	Cars (car_id, brand, type, size, transmission, available)
+•	Bookings (booking_id, user_id, car_id, date, status)
+ 
+    
+3. User Stories / Use Cases
+User Perspective
+•	As a user, I want to register and log in so that I can access my bookings.
+•	As a user, I want to filter cars based on size, brand, and type so that I can find my preferred option.
+•	As a user, I want to make a booking and receive a confirmation.
+•	As a user, I want to cancel a booking if needed.
+•	As a user, I want to make a secure payment to confirm my booking.
+Admin Perspective
+•	As an admin, I want to manage car availability.
+•	As an admin, I want to view all active bookings.
+•	As an admin, I want to handle customer support queries.
+4. Timetable for the Work
+The project is planned for 5 weeks
+ 
