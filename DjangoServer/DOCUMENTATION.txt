@@ -1,6 +1,6 @@
 DOKUMENTATION
 Varje ändring vi gör ska dokumenteras, så vi vet vad vi ska redovisa
-Ändringar i djangos Framework görs med svenska kommentarer
+Ändringar vi gör i djangos Framework ska avslutas med våra initialer, ex // kommentar här /FL
 
 2025-02-18 Skapar projektet för django med: python -m django startproject DSD400Project -- (färdig, behövs bara göra en gång)
 
