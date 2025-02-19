@@ -1,0 +1,12 @@
+DOKUMENTATION
+Varje ändring vi gör ska dokumenteras, så vi vet vad vi ska redovisa
+Ändringar i djangos Framework görs med svenska kommentarer
+
+2025-02-18 Skapar projektet för django med: python -m django startproject DSD400Project -- (färdig, behövs bara göra en gång)
+
+2025-02-19 la till mapp 'templates' för .html och la till mappen i settings.py, i listan TEMPLATES[DIRS] så django kan hämta dem.
+
+2025-02-19 importerade metoden render till webpages.py som används för att köra .html via våra funktioner
+
+2025-02-19 skapade mapp för static/css. Lade till STATIC DIR lista i settings.py. Genom denna lista kan mappar importeras med en django tag.
+

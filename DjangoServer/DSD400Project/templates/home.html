@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+{% load static %} <!-- This is a Django template tag that loads static files // link till vår static mapp -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> <!-- Här länkar vi till vår css-fil --> 
+<body>
+    <h1>Welcome to the Home Page</h1>
+    <p>This is the home page for the DSD400 Project</p>
+    <p>Check out the <a href="/about">About</a> here</p>
+    <p>Check out the <a href="/user">User</a> here</p>
+</html>
