@@ -1,43 +1,51 @@
-body {
-    background: linear-gradient(45deg, #085b92, #2179ac); 
-    color: white; 
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
+
+.logo-container {
+    text-align: center;  
+    margin-bottom: 20px;  
 }
-#bookingFormContainer {
-    background: white;
+
+.logo {
+    width: 150px;  
+    height: auto; 
+}
+
+
+h1 {
+    text-align: center;
+    font-size: 3em;
+    color: #2c3e50;
+    margin-top: 10px;
+    text-transform: uppercase;
+}
+
+
+#boxes {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
     padding: 20px;
+    background: #f4f4f4;
     border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    width: 90%;
-    max-width: 600px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#authTitle {
+    text-align: center;
+    font-size: 1.8em;
     margin-bottom: 20px;
 }
 
-.table-container {
-    max-height: 400px;
-    overflow-y: scroll;
-    width: 90%;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+label {
+    font-size: 1.2em;
+    margin-bottom: 5px;
 }
 
-table {
+input[type="email"], input[type="password"] {
     width: 100%;
-    border-collapse: collapse;
-}
-
-th, td {
     padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background-color: #007BFF;
-    color: white;
+    margin: 5px 0 15px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
 }
 
 button {
@@ -47,30 +55,69 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-right: 5px;
+    width: 100%;
 }
 
 button:hover {
     background-color: #218838;
 }
 
-h1 {
-    font-size: 3em;
-    color: transparent; /* Make the text color transparent */
-    background: radial-gradient(circle, #a0b9d3 60%, transparent 60%) center/15px 15px; /* Larger dots */
-    background-clip: text; /* Clip the background to the text */
+#toggleAuth {
     text-align: center;
     margin-top: 10px;
-    text-transform: uppercase;
-    font-weight: bold;
-    text-shadow: 
-        2px 2px 6px rgba(236, 223, 223, 0.5),  /* Stronger shadow */
-        4px 4px 12px rgba(236, 223, 223, 0.5),
-        6px 6px 18px rgba(236, 223, 223, 0.5); /* Deeper shadow for better visibility */
 }
 
-.form-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.table-container {
+    width: 90%;
+    margin-top: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-size: 1em;
+}
+
+th {
+    background-color: #2c3e50; 
+    color: white; 
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+td {
+    background-color: #f9f9f9; 
+}
+
+tr:nth-child(even) td {
+    background-color: #f1f1f1; 
+}
+
+tr:hover td {
+    background-color: #eaeaea; 
+}
+
+/* Additional Styling */
+button {
+    background-color: #007BFF; 
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3; 
 }
