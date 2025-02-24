@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+{% load static %} <!-- This is a Django template tag that loads static files // link till vår static mapp -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> <!-- Här länkar vi till vår css-fil --> 
+</head>
+<body>
+    <h1>Welcome to the User Page</h1>
+    <p>This is the user page will be private for each user</p>
+    <p>Detta är en placeholder, ändra sidan till vad vi vill sen</p>
+    <p>Check out the <a href="/">Home</a> here</p>
+    <p>Check out the <a href="/about">About</a> here</p>
+</html>

@@ -1,0 +1,15 @@
+DOKUMENTATION
+Varje ändring vi gör ska dokumenteras, så vi vet vad vi ska redovisa
+Ändringar vi gör i djangos Framework ska avslutas med våra initialer, ex // kommentar här /FL
+
+2025-02-18 Skapar projektet för django med: python -m django startproject DSD400Project -- (färdig, behövs bara göra en gång)/FL
+
+2025-02-19 la till mapp 'templates' för .html och la till mappen i settings.py, i listan TEMPLATES[DIRS] så django kan hämta dem./FL
+
+2025-02-19 importerade metoden render till webpages.py som används för att köra .html via våra funktioner/FL
+
+2025-02-19 skapade mapp för static/css. Lade till STATIC DIR lista i settings.py. Genom denna lista kan mappar importeras med en django tag./FL
+
+2025-02-19 skapade ny .js i static mapp, flyttade runt kod så de hamnade på rätt plats /FL
+
+2025-02-23 skapade models.py. Här förvaras funktioner som hanterar querys med databas /FL
