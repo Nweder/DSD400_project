@@ -30,52 +30,52 @@ class Cars (models.Model):
     # Detta syns bara av admin, så man kan få en överblick över vilka bilar som är reserverade
     reservedByUserId = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    is_available = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f"{self.brand} {self.type} {self.model} ({self.size})"
+
 class Reservation(models.Model):
     reservationId = models.IntegerField(max_length=50, primary_key=True)
-    carId = models.ForeignKey(Cars, on_delete=models.CASCADE)
+    carId = models.ForeignKey(Cars, on_delete=models.CASCADE) #on_delete=models.CASCADE → Anger vad som händer när en User raderas tex Om en användare raderas, raderas alla relaterade objekt (CASCADE
     userId = models.ForeignKey(User, on_delete=models.CASCADE)
     
     startDate = models.DateField()
     endDate = models.DateField()
 
-class Car(models.Model):
-    brand = models.CharField(max_length=50)
-    model = models.CharField(max_length=50)
-    size = models.CharField(
-        max_length=20, 
-        choices=[("Small", "Small"), ("Medium", "Medium"), ("Large", "Large")]
-    )
-    fuel_type = models.CharField(
-        max_length=20, 
-        choices=[("Petrol", "Petrol"), ("Diesel", "Diesel"), ("Electric", "Electric")]
-    )
-    is_available = models.BooleanField(default=True)
-
-    def __str__(self):
-        return f"{self.brand} {self.model} ({self.size})"
-    
-class Booking(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)  # Koppling till Django-användaren
-    car = models.ForeignKey(Car, on_delete=models.CASCADE)
-    booking_from = models.DateField()
-    booking_to = models.DateField()
-    status = models.CharField(
-        max_length=20, 
-        choices=[("Pending", "Pending"), ("Confirmed", "Confirmed"), ("Cancelled", "Cancelled")], 
-        default="Pending"
-    )
-    def clean(self):
-        # Kontrollera om bilen är ledig under den valda perioden
-        overlapping_bookings = Booking.objects.filter(
+    def clean(self):        # Kontrollera om bilen är ledig under den valda perioden
+        overlapping_bookings = Reservation.objects.filter( 
             car=self.car,
             booking_from__lt=self.booking_to,
             booking_to__gt=self.booking_from,
             status="Confirmed"
         ).exists()
-
+        
         if overlapping_bookings:
             raise ValidationError("Denna bil är redan bokad under denna period.")
+    
 
+    
+# class Booking(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)  # Koppling till Django-användaren
+#     car = models.ForeignKey(Cars, on_delete=models.CASCADE)
+#     booking_from = models.DateField()
+#     booking_to = models.DateField()
+#     status = models.CharField(
+#         max_length=20, 
+#         choices=[("Pending", "Pending"), ("Confirmed", "Confirmed"), ("Cancelled", "Cancelled")], 
+#         default="Pending"
+#     )
+#     def clean(self):        # Kontrollera om bilen är ledig under den valda perioden
+#         overlapping_bookings = Booking.objects.filter( 
+#             car=self.car,
+#             booking_from__lt=self.booking_to,
+#             booking_to__gt=self.booking_from,
+#             status="Confirmed"
+#         ).exists()
 
-    def __str__(self):
-        return f"Booking {self.id} - {self.user.username} - {self.car.brand} {self.car.model}"
+#         if overlapping_bookings:
+#             raise ValidationError("Denna bil är redan bokad under denna period.")
+
+#     def __str__(self):
+#         return f"Booking {self.id} - {self.user.username} - {self.car.brand} {self.car.model}"
