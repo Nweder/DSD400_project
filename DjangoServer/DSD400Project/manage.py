@@ -2,6 +2,10 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+from django.db import models
+from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'DSD400Project.settings') ##Lösning att få min jävla Migrate funka ... men funkar ej /MN
 
 
 def main():
@@ -20,3 +24,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+

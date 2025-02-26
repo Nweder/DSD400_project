@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'DSD400Project',
+    # 'DSD400Project.apps.DSD400ProjectConfig',
+    # 'website.apps.WebsiteConfig',
     
 ]
 

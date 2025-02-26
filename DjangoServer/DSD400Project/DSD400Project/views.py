@@ -15,6 +15,10 @@ def homePage(request):
     else:
         return render(request, 'home.html')
 
+# def signup(request):
+#     return render (request, "signup.html",{})
+    
+
 def aboutPage(request):
     return render(request, 'about.html')
 
