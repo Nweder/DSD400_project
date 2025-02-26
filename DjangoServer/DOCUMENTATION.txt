@@ -15,3 +15,5 @@ Varje ändring vi gör ska dokumenteras, så vi vet vad vi ska redovisa
 2025-02-23 skapade models.py. Här förvaras funktioner som hanterar querys med databas /FL
 
 2025-02-25 Satte upp login för användare på homePage / FL
+
+2025-02-26 Satte upp registrering av användare / FL

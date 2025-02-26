@@ -14,13 +14,73 @@
     <h1>HV <br>car booking</h1>
     
     <!--homePage är login, sedan omvandlas den till hemsidan där man bokar-->
-    
-    {% if username.is_authenticated %}
-    <div>
-        <h1>Welcome, {{ username }}</h1>
-    </div>
-    {% else %}
+    {% if user.is_authenticated %}
     <div id="boxes">
+        <form method="POST" action="{% url 'logoutUser'%}">
+        {% csrf_token %}
+        <button type=submit>Logout</button>
+        </form>
+
+        <form id="bookingForm">
+            <!-- Filter Choices -->
+            <label for="brand">Car Brand:</label>
+            <select id="brand">
+                <option value="">-- Select Brand --</option>
+                <option value="Volvo">Volvo</option>
+                <option value="BMW">BMW</option>
+                <option value="Audi">Audi</option>
+                <option value="Toyota">Toyota</option>
+            </select><br><br>
+
+            <label for="size">Car Size:</label>
+            <select id="size">
+                <option value="">-- Select Size --</option>
+                <option value="Combi">Combi</option>
+                <option value="SUV">SUV</option>
+            </select><br><br>
+
+            <label for="fuelType">Fuel Type:</label>
+            <select id="fuelType">
+                <option value="">-- Select Fuel Type --</option>
+                <option value="Fuel">Fuel</option>
+                <option value="Electric">Electric</option>
+            </select><br><br>
+
+            <!-- Car Selection -->
+            <!-- <label for="carId">Car ID:</label>
+            <input type="text" id="carId" name="carId"><br><br> -->
+
+            <label for="dateFrom">Booking From:</label>
+            <input type="date" id="dateFrom" name="dateFrom"><br><br>
+
+            <label for="dateTo">Booking To:</label>
+            <input type="date" id="dateTo" name="dateTo"><br><br>
+
+            <button type="button" onclick="fetchFilteredCars()">Search Cars</button>
+            <button type="button" onclick="submitBooking()">Add Booking</button>
+            <button type="button" onclick="fetchBookings()">Show Bookings</button>
+        </form>
+    </div>
+
+    <div class="cont">
+        <table id="bookingTable">
+            <thead>
+                <tr>
+                    <th>Booking ID</th>
+                    <th>start</th>
+                    <th>end</th>
+                </tr>
+            </thead>
+            <hr>
+            <tbody>
+                <!-- Data will be dynamically populated -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Login screen if not authenticated -->
+    {% else %}
+    <div id="boxes"> 
         <form id="authForm" method="POST" action="{% url 'homePage' %}">
             {% csrf_token %}
             <form>
@@ -28,8 +88,10 @@
             <input type="text" id="username" name='username' placeholder='Username' required><br><br>
             <input type="password" id="password" name='password' placeholder='Password' required><br><br>
             <button type="submit">Login</button>
-            <p id="toggleAuth">Don't have an account? <a href="{% url 'registerPage' %}">Register</a></p>
-            </form>
+        </form>
+        <form id="toggleAuth" action="{% url 'registerPage' %}">
+            {% csrf_token %}
+            <button type=submit>Register</button>
         </form>
     </div>
     {% endif %}
