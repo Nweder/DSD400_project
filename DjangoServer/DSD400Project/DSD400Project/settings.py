@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'DSD400Project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
+DATABASES = { 
     "default": {
         "ENGINE": "django.db.backends.mysql", #ska byta till postgresql eller mysql
         "NAME": "dsd400",  
