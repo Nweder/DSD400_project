@@ -17,3 +17,21 @@ Varje ändring vi gör ska dokumenteras, så vi vet vad vi ska redovisa
 2025-02-25 Satte upp login för användare på homePage / FL
 
 2025-02-26 Satte upp registrering av användare / FL
+
+2025-02-27 Gjort dataBase och ändrade settings  Skapat ny database Server och skapat database.
+Vi kommer köra med dessa 
+Connectionname: MySQL999
+username:root
+pass:12345
+port:3306
+
+
+Alla password är 12345
+cmd -> mysql -u root -p #om man vill sätta server på 
+för att köra database serven på data skriver man --> net start MySQL999
+to cheak mysql server running : -> netstat -ano | findstr :3306
+
+Finns även inbbygda tabller i superuser när man loggar in men som vi sa, vi kommer inte anävnda de   /MN
+
+Nu har tetsat och kunde skapa database från vår file mydb.py som jag gjort //MN
+____________________________________________________________________________________________________________
