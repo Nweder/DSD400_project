@@ -76,14 +76,14 @@ WSGI_APPLICATION = 'DSD400Project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = { 
+DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql", #ska byta till postgresql eller mysql
         "NAME": "dsd400",  
         "USER": "root", 
         "PASSWORD": "12345",  
         "HOST": "127.0.0.1",  
-        "PORT": "8001",   #"5432", Default PostgreSQL port
+        "PORT": "3306",   #"5432", Default PostgreSQL port
     }
 }
 
