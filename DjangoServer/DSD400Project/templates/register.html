@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+{% load static %} <!-- This is a Django template tag that loads static files // link till vår static mapp -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>registerPage</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> <!-- Här länkar vi till vår css-fil --> 
+</head>
+<body>
+    <div class="logo-container">
+        <img src="{% static 'images/hv_logo.png' %}" alt="HV Logo" class="logo">
+        </div>
+        <h1>HV <br>car booking</h1>
+
+        <div id="boxes">
+            <form method="POST">
+            {% csrf_token %}
+            
+            <h2 id='authTitle'>Register</h2>
+            {{form.as_p}}
+            <p>Already have an account? <a href="{% url 'homePage' %}">Login</a></p>
+            <button type="submit">Register</button>
+            
+            </form>
+        </div>
+</body>
+</html>
