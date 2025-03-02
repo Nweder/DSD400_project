@@ -24,5 +24,9 @@ urlpatterns = [
     path('logout/',views.logoutUser,name='logoutUser'),
     path('about/',views.aboutPage,name='aboutPage'),
     path('register/',views.registerPage,name='registerPage'),
-    
+
+    path('create_reservation/', views.create_reservation, name='create_reservation'), #Nyaa url
+    path('home/', views.homePage, name='homePage'),
+    path('signup/', views.signup_user, name='signup'),
+    path('login/', views.login_user, name='login'),
 ]

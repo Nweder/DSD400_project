@@ -35,3 +35,11 @@ Finns även inbbygda tabller i superuser när man loggar in men som vi sa, vi ko
 
 Nu har tetsat och kunde skapa database från vår file mydb.py som jag gjort //MN
 ____________________________________________________________________________________________________________
+2025-03-02 by //MN 
+
+Jag har lagt funktioner på views.py registerPage, create_reservation , signup_user , get_cars ,  add_booking,  login_user 
+Nya URLs inladga, ändra lite i js som anpasat efter det jag har gjort. 
+Har ändra och fixar om på Classer till cars och resevation.
+* Database är fixat ska maila dig den. 
+* Har även ändrat på html och vill se om jag kom åt databasen men det gick inte. 
+____________________________________________________________________________________________________________

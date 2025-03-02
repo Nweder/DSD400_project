@@ -83,6 +83,8 @@
 
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
+
 
 class User(models.Model):
     userId = models.AutoField(primary_key=True)
@@ -96,33 +98,30 @@ class User(models.Model):
 class Cars(models.Model):
     carId = models.AutoField(primary_key=True)
     brand = models.CharField(max_length=50)
-    type = models.CharField(max_length=50)
+    FuelType = models.CharField(max_length=50)
     size = models.CharField(max_length=50)
     model = models.CharField(max_length=50)
     transmission = models.CharField(max_length=50)
     isReserved = models.BooleanField(default=False)
-    reservedByUserId = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    # reservedByUserId = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     is_available = models.BooleanField(default=True)
-
     def __str__(self):
         return f"{self.brand} {self.model} ({self.size})"
 
 class Reservation(models.Model):
     reservationId = models.AutoField(primary_key=True)
-    carId = models.ForeignKey(Cars, on_delete=models.CASCADE)
+    carId = models.ForeignKey('Cars', on_delete=models.CASCADE)
     userId = models.ForeignKey(User, on_delete=models.CASCADE)
     startDate = models.DateField()
     endDate = models.DateField()
 
     def clean(self):
-        overlapping_bookings = Reservation.objects.filter(
+        if Reservation.objects.filter(
             carId=self.carId,
             startDate__lt=self.endDate,
             endDate__gt=self.startDate,
-        ).exists()
-
-        if overlapping_bookings:
-            raise ValidationError("Denna bil är redan bokad under denna period.")
+        ).exists():
+            raise ValidationError("Denna bil är redan bokad under denna period {startDate__lt} {endDate__gt} .")
 
     def __str__(self):
         return f"Reservation {self.reservationId} - {self.carId.brand} for {self.userId.name}"
