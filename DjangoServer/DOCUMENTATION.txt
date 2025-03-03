@@ -34,4 +34,5 @@ to cheak mysql server running : -> netstat -ano | findstr :3306
 Finns även inbbygda tabller i superuser när man loggar in men som vi sa, vi kommer inte anävnda de   /MN
 
 Nu har tetsat och kunde skapa database från vår file mydb.py som jag gjort //MN
-____________________________________________________________________________________________________________
+
+2025-03-03 Tog bort User i models.py (vi använder oss av djangos inbyggda users). Ändrade namnet Cars till Car, kan ställa till problem i db med table namn. Tog bort dubletter av kod. // FL

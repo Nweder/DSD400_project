@@ -9,46 +9,53 @@
 </head>
 <body>
     <div class="logo-container">
-    <img src="{% static 'images/hv_logo.png' %}" alt="HV Logo" class="logo">
+        <img src="{% static 'images/hv_logo.png' %}" alt="HV Logo" class="logo">
     </div>
     <h1>HV <br>car booking</h1>
     
     <!--homePage är login, sedan omvandlas den till hemsidan där man bokar-->
     {% if user.is_authenticated %}
-    <div id="boxes">
-        <form method="POST" action="{% url 'logoutUser'%}">
-        {% csrf_token %}
-        <button type=submit>Logout</button>
-        </form>
 
+    <div id="boxes">
+        <!-- welcome Text (debug so we know who is logged in) -->
+        <h2 id="authTitle">Welcome {{ user.username }}</h2>
+        
+        
+
+        <!-- Logout Form -->
+        <form method="POST" action="{% url 'logoutUser'%}">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+    
+    <!-- Car Booking -->
+    <div id="boxes">
         <form id="bookingForm">
             <!-- Filter Choices -->
             <label for="brand">Car Brand:</label>
-            <select id="brand">
+            <select id="brand" name="brand">
                 <option value="">-- Select Brand --</option>
                 <option value="Volvo">Volvo</option>
                 <option value="BMW">BMW</option>
-                <option value="Audi">Audi</option>
-                <option value="Toyota">Toyota</option>
+                {% for car in cars %}
+                    <option value="{{ car.id }}">{{ car.brand }}</option>
+                {% endfor %}
             </select><br><br>
 
             <label for="size">Car Size:</label>
-            <select id="size">
+            <select id="size" name="size">
                 <option value="">-- Select Size --</option>
                 <option value="Combi">Combi</option>
                 <option value="SUV">SUV</option>
             </select><br><br>
 
             <label for="fuelType">Fuel Type:</label>
-            <select id="fuelType">
+            <select id="fuelType" name="fuelType">
                 <option value="">-- Select Fuel Type --</option>
                 <option value="Fuel">Fuel</option>
                 <option value="Electric">Electric</option>
             </select><br><br>
-
-            <!-- Car Selection -->
-            <!-- <label for="carId">Car ID:</label>
-            <input type="text" id="carId" name="carId"><br><br> -->
 
             <label for="dateFrom">Booking From:</label>
             <input type="date" id="dateFrom" name="dateFrom"><br><br>
@@ -61,23 +68,40 @@
             <button type="button" onclick="fetchBookings()">Show Bookings</button>
         </form>
     </div>
-
+    
+    <!-- Car Table -->
     <div class="cont">
-        <table id="bookingTable">
+        <table id="reservationTable">
             <thead>
                 <tr>
-                    <th>Booking ID</th>
-                    <th>start</th>
-                    <th>end</th>
+                    <th>Brand</th>
+                    <th>Size</th>
+                    <th>Type</th>
+                    <th>Transmission</th>
+                    <th>Fuel Type</th>
+                    <th>Date From</th>
+                    <th>Date To</th>
                 </tr>
-            </thead>
-            <hr>
+           </thead>
             <tbody>
-                <!-- Data will be dynamically populated -->
+                {% if reservations %}
+                    {% for reservation in reservations %}
+                    <tr>
+                        <td>{{ reservation.carId.brand }}</td>
+                        <td>{{ reservation.carId.size }}</td>
+                        <td>{{ reservation.carId.type }}</td>
+                        <td>{{ reservation.carId.transmission }}</td>
+                        <td>{{ reservation.carId.fuelType }}</td>
+                        <td>{{ reservation.dateFrom }}</td>
+                        <td>{{ reservation.dateTo }}</td>
+                    </tr>
+                    {% endfor %}
+                {% endif %}
             </tbody>
         </table>
     </div>
 
+    
     <!-- Login screen if not authenticated -->
     {% else %}
     <div id="boxes"> 

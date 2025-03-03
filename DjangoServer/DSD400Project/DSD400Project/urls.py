@@ -24,5 +24,4 @@ urlpatterns = [
     path('logout/',views.logoutUser,name='logoutUser'),
     path('about/',views.aboutPage,name='aboutPage'),
     path('register/',views.registerPage,name='registerPage'),
-    
 ]

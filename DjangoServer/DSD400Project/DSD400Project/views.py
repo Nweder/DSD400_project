@@ -2,8 +2,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from .forms import SignUpForm
+from .models import Reservation, Car
 
 def homePage(request):
+    cars = Car.objects.all()  # Fetch cars
+    reservations = Reservation.objects.all()  # Fetch reservations
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -14,7 +17,8 @@ def homePage(request):
         else:
             return redirect(reverse('homePage'))
     else:
-        return render(request, 'home.html')
+        return render(request, 'home.html',{'reservations':reservations,'cars': cars})
+
 
 def aboutPage(request):
     return render(request, 'about.html')
@@ -34,7 +38,6 @@ def registerPage(request):
         form = SignUpForm()
         return render(request, 'register.html', {'form': form})
     return render(request, 'register.html', {'form': form})
-
 
 def logoutUser(request):
     logout(request)
