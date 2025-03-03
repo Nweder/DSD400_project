@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-{% load static %} <!-- This is a Django template tag that loads static files // link till vår static mapp -->
+{% load static %}
 <html>
 <head>
     <title>Car Booking System</title>
     <meta charset="utf-8"/>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}"> <!-- Här länkar vi till vår css-fil --> 
-    <script src="{% static 'js/main.js' %}" defer></script> <!-- Här länkar vi till vår js-fil -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> <!-- Link to CSS -->
+    <script src="{% static 'js/main.js' %}" defer></script> <!-- Link to JS -->
 </head>
 <body>
     <div class="logo-container">
         <img src="{% static 'images/hv_logo.png' %}" alt="HV Logo" class="logo">
     </div>
-    <h1>HV <br>car booking</h1>
-    
-    <!--homePage är login, sedan omvandlas den till hemsidan där man bokar-->
+    <h1>HV <br>Car Booking</h1>
+
+    <!-- HomePage (login / signup) -->
     {% if user.is_authenticated %}
 
     <div id="boxes">
@@ -59,9 +59,12 @@
 
             <label for="dateFrom">Booking From:</label>
             <input type="date" id="dateFrom" name="dateFrom"><br><br>
+                <button type="button" onclick="fetchFilteredCars()">Search Cars</button>
+                <button type="button" onclick="submitBooking()">Add Booking</button>
+                <button type="button" onclick="fetchBookings()">Show Bookings</button>
+            </form>
+        </div>
 
-            <label for="dateTo">Booking To:</label>
-            <input type="date" id="dateTo" name="dateTo"><br><br>
 
             <button type="button" onclick="fetchFilteredCars()">Search Cars</button>
             <button type="button" onclick="submitBooking()">Add Booking</button>
@@ -103,24 +106,22 @@
 
     
     <!-- Login screen if not authenticated -->
-    {% else %}
-    <div id="boxes"> 
-        <form id="authForm" method="POST" action="{% url 'homePage' %}">
-            {% csrf_token %}
-            <form>
-            <h2 id="authTitle">Login</h2>
-            <input type="text" id="username" name='username' placeholder='Username' required><br><br>
-            <input type="password" id="password" name='password' placeholder='Password' required><br><br>
-            <button type="submit">Login</button>
-        </form>
-        <form id="toggleAuth" action="{% url 'registerPage' %}">
-            {% csrf_token %}
-            <button type=submit>Register</button>
-        </form>
-    </div>
-    {% endif %}
 
-    
+    {% else %}
+        <!-- Login Screen if Not Authenticated -->
+        <div id="boxes"> 
+            <form id="authForm" method="POST" action="{% url 'homePage' %}">
+                {% csrf_token %}
+                <h2 id="authTitle">Login</h2>
+                <input type="text" id="username" name="username" placeholder="Username" required><br><br>
+                <input type="password" id="password" name="password" placeholder="Password" required><br><br>
+                <button type="submit">Login</button>
+            </form>
+
+            <form id="toggleAuth" action="{% url 'registerPage' %}">
+                <button type="submit">Register</button>
+            </form>
+        </div>
+    {% endif %}
 </body>
 </html>
-

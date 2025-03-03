@@ -13,9 +13,7 @@ def homePage(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect(reverse('homePage'))
-        else:
-            return redirect(reverse('homePage'))
+        return redirect(reverse('homePage'))
     else:
         return render(request, 'home.html',{'reservations':reservations,'cars': cars})
 
@@ -23,13 +21,13 @@ def homePage(request):
 def aboutPage(request):
     return render(request, 'about.html')
 
+
 def registerPage(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
-            # Authenticate and login
-            username = form.cleaned_data.get('username')
+            username = form.cleaned_data.get('username') # Authenticate and login
             password = form.cleaned_data.get('password1')
             user = authenticate(request, username=username, password=password)
             login(request, user)
@@ -42,3 +40,4 @@ def registerPage(request):
 def logoutUser(request):
     logout(request)
     return redirect(reverse('homePage'))
+

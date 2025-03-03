@@ -25,17 +25,14 @@ class Reservation(models.Model):
     reservationId = models.AutoField(primary_key=True)
     carId = models.ForeignKey(Car, on_delete=models.CASCADE)
     userId = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+
     startDate = models.DateField()
     endDate = models.DateField()
 
     def clean(self):
-        overlapping_bookings = Reservation.objects.filter(
+        if Reservation.objects.filter(
             carId=self.carId,
             startDate__lt=self.endDate,
             endDate__gt=self.startDate,
-        ).exists()
-
-        if overlapping_bookings:
-            raise ValidationError("Denna bil är redan bokad under denna period.")
-
-    
+        ).exists():
+            raise ValidationError("Denna bil är redan bokad under denna period {startDate__lt} {endDate__gt} .")
