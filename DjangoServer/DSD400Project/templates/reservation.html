@@ -38,6 +38,7 @@
             {% if reservations %}
             <thead>
                 <tr>
+                    <th> </th>
                     <th>Brand</th>
                     <th>Size</th>
                     <th>Type</th>
@@ -48,19 +49,25 @@
                 </tr>
            </thead>
             <tbody>
-                {% for reservation in reservations %}
-                    <tr>
-                        <td>{{ reservation.carId.brand }}</td>
-                        <td>{{ reservation.carId.size }}</td>
-                        <td>{{ reservation.carId.type }}</td>
-                        <td>{{ reservation.carId.transmission }}</td>
-                        <td>{{ reservation.carId.fuelType }}</td>
-                        <td>{{ reservation.dateFrom }}</td>
-                        <td>{{ reservation.dateTo }}</td>
-                    </tr>
-                {% endfor %}
-            {% endif %}
+            {% for reservation in reservations %}
+                <tr>
+                    <td>
+                        <form method="POST" action="{% url 'deleteReservation' reservation.reservationId %}">
+                            {% csrf_token %}
+                            <button type="submit">DELETE</button>
+                        </form>
+                    </td>
+                    <td>{{ reservation.carId.brand }}</td>
+                    <td>{{ reservation.carId.size }}</td>
+                    <td>{{ reservation.carId.type }}</td>
+                    <td>{{ reservation.carId.transmission }}</td>
+                    <td>{{ reservation.carId.fuelType }}</td>
+                    <td>{{ reservation.dateFrom }}</td>
+                    <td>{{ reservation.dateTo }}</td>
+                </tr>
+            {% endfor %}
             </tbody>
+            {% endif %}
         </table>
     </div>
     {% endif %}

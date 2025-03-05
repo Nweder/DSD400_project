@@ -25,4 +25,5 @@ urlpatterns = [
     path('about/',views.aboutPage,name='aboutPage'),
     path('register/',views.registerPage,name='registerPage'),
     path('reservation/',views.reservePage,name='reservePage'),
+    path('delete/<int:pk>',views.deleteReservation,name='deleteReservation'),
 ]

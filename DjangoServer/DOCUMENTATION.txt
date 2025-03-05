@@ -50,3 +50,5 @@ ________________________________________________________________________________
 >>>>>>> c6b35396324ca6cbba6c52ee7854ba88bbb838f7
 
 2025-03-05 la till reservation.html. här hittar man 'User' reservationer. har gjort ändringar i home.html som skickar en till reservations, och lagt till sida i urls.py och veiw.py
+
+2025-03-05 Har lagt till att bara lediga bilar (isAvailable(False)) visas på homepage. User ta bort sina reservationer från webben. //FL

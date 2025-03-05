@@ -44,4 +44,11 @@ def reservePage(request):
         return render(request, 'reservation.html', {'reservations': reservations})
     else:
         return redirect(reverse('homePage'))
-    
+
+def deleteReservation(request, pk):
+    if request.user.is_authenticated:
+        reservation = Reservation.objects.get(reservationId=pk)
+        reservation.delete()
+        return redirect(reverse('reservePage'))
+    else:
+        return redirect(reverse('homePage'))   

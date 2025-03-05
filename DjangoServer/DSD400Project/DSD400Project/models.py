@@ -11,15 +11,13 @@ class User():
 
 class Car(models.Model):
     carId = models.AutoField(primary_key=True)
-    brand = models.CharField(max_length=50, default='brand') #märke (volvo, bmw, etc)
-    type = models.CharField(max_length=50,default='type')  #typ (suv, sedan, kombi, etc)
-    size = models.CharField(max_length=50, default='size') #storlek (liten, mellan, stor)
-    transmission = models.CharField(max_length=50, default='trans') #växellåda - automat eller manuell
-    fuelType = models.CharField(max_length=50, default="fuel") #bränsle - bensin, diesel, el, etc
+    brand = models.CharField(max_length=50,choices={'Volvo':'Volvo','BMW':'BMW','Audi':'Audi'}) #märke (volvo, bmw, etc)
+    type = models.CharField(max_length=50, choices={'SUV':'SUV','Sedan':'Sedan','Combi':'Combi'})  #typ (suv, sedan, kombi, etc)
+    size = models.CharField(max_length=50, choices={'small':'small','medium':'medium','big':'big'}) #storlek (liten, mellan, stor)
+    transmission = models.CharField(max_length=50, choices={'automatic':'automatic','manual':'manual'}) #växellåda - automat eller manuell
+    fuelType = models.CharField(max_length=50, choices={'gas':'gas','electric':'electric'}) #bränsle - bensin, diesel, el, etc
 
-    # Följande 2 attribut är tror jag ska ligga på reservation istället, vi kollar upp det sen    
-    isReserved = models.BooleanField(default=False)
-    is_available = models.BooleanField(default=True)
+    isAvailable = models.BooleanField(default=True)
 
 class Reservation(models.Model):
     reservationId = models.AutoField(primary_key=True)
