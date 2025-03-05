@@ -1,17 +1,13 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.conf import settings
-from django.contrib.auth.models import AbstractUser
 
-class User(AbstractUser):
-    userId = models.AutoField(primary_key=True)
-    username = models.CharField(max_length=50, default='username')
-    password = models.CharField(max_length=50, default='password')
-    email = models.EmailField(default='email')
-    
-
-    def __str__(self):
-        return self.username 
+class User():
+    pass
+    # Denna änvänds inte längre, utan vi ska använda Django's inbyggda User model istället
+    # settings.AUTH_USER_MODEL som foreign key
+    # Detta gör att länkar djangos User till våra models
+    # https://docs.djangoproject.com/en/3.2/topics/auth/customizing/#using-a-custom-user-model-when-starting-a-project  
 
 class Car(models.Model):
     carId = models.AutoField(primary_key=True)
@@ -27,8 +23,8 @@ class Car(models.Model):
 
 class Reservation(models.Model):
     reservationId = models.AutoField(primary_key=True)
-    carId = models.ForeignKey(Car.carId, on_delete=models.CASCADE)
-    userId = models.ForeignKey(User.userId,on_delete=models.CASCADE)
+    carId = models.ForeignKey(Car, on_delete=models.CASCADE)
+    userId = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
 
     startDate = models.DateField()
     endDate = models.DateField()

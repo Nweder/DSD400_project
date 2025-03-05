@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     
 ]
 
-ATH_USER_MODEL = 'DSD400Project.User' # Ändrar Djangos default User model till vår egen User model
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
