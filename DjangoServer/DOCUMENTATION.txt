@@ -49,3 +49,4 @@ Har ändra och fixar om på Classer till cars och resevation.
 ____________________________________________________________________________________________________________
 >>>>>>> c6b35396324ca6cbba6c52ee7854ba88bbb838f7
 
+2025-03-05 la till reservation.html. här hittar man 'User' reservationer. har gjort ändringar i home.html som skickar en till reservations, och lagt till sida i urls.py och veiw.py

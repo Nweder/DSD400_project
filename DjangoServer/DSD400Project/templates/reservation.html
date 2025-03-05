@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>Car Booking System</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> <!-- Link to CSS -->
+    <script src="{% static 'js/main.js' %}" defer></script> <!-- Link to JS -->
+</head>
+<body>
+    <div class="logo-container">
+        <img src="{% static 'images/hv_logo.png' %}" alt="HV Logo" class="logo">
+    </div>
+    <h1>HV <br>Car Booking</h1>
+
+    <!-- HomePage (login / signup) -->
+    {% if user.is_authenticated %}
+
+    <div id="boxes">
+        <!-- welcome Text (debug so we know who is logged in) -->
+        <h2 id="authTitle">Reservations for {{ user.username }}</h2>
+         
+        <!-- HomePage -->
+         <form method="GET" action="{% url 'homePage'%}">
+            {% csrf_token %}
+            <button type="submit">Back to home</button>
+        </form>
+        <!-- Logout Form -->
+        <form method="POST" action="{% url 'logoutUser'%}">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+    
+    <!-- Car Table -->
+    <div class="cont">
+        <table id="reservationTable">
+            {% if reservations %}
+            <thead>
+                <tr>
+                    <th>Brand</th>
+                    <th>Size</th>
+                    <th>Type</th>
+                    <th>Transmission</th>
+                    <th>Fuel Type</th>
+                    <th>Date From</th>
+                    <th>Date To</th>
+                </tr>
+           </thead>
+            <tbody>
+                {% for reservation in reservations %}
+                    <tr>
+                        <td>{{ reservation.carId.brand }}</td>
+                        <td>{{ reservation.carId.size }}</td>
+                        <td>{{ reservation.carId.type }}</td>
+                        <td>{{ reservation.carId.transmission }}</td>
+                        <td>{{ reservation.carId.fuelType }}</td>
+                        <td>{{ reservation.dateFrom }}</td>
+                        <td>{{ reservation.dateTo }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+</body>
+</html>

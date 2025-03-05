@@ -20,7 +20,11 @@
         <!-- welcome Text (debug so we know who is logged in) -->
         <h2 id="authTitle">Welcome {{ user.username }}</h2>
         
-        
+         <!-- reserve list-->
+         <form method="POST" action="{% url 'reservePage' %}">
+            {% csrf_token %}
+            <button type="submit">Check Reservations</button>
+        </form>
 
         <!-- Logout Form -->
         <form method="POST" action="{% url 'logoutUser'%}">
@@ -28,7 +32,7 @@
             <button type="submit">Logout</button>
         </form>
     </div>
-    
+
     <!-- Car Booking -->
     <div id="boxes">
         <form id="bookingForm">
@@ -62,50 +66,8 @@
                 <button type="button" onclick="fetchFilteredCars()">Search Cars</button>
                 <button type="button" onclick="submitBooking()">Add Booking</button>
                 <button type="button" onclick="fetchBookings()">Show Bookings</button>
-            </form>
-        </div>
-
-
-            <button type="button" onclick="fetchFilteredCars()">Search Cars</button>
-            <button type="button" onclick="submitBooking()">Add Booking</button>
-            <button type="button" onclick="fetchBookings()">Show Bookings</button>
         </form>
     </div>
-    
-    <!-- Car Table -->
-    <div class="cont">
-        <table id="reservationTable">
-            <thead>
-                <tr>
-                    <th>Brand</th>
-                    <th>Size</th>
-                    <th>Type</th>
-                    <th>Transmission</th>
-                    <th>Fuel Type</th>
-                    <th>Date From</th>
-                    <th>Date To</th>
-                </tr>
-           </thead>
-            <tbody>
-                {% if reservations %}
-                    {% for reservation in reservations %}
-                    <tr>
-                        <td>{{ reservation.carId.brand }}</td>
-                        <td>{{ reservation.carId.size }}</td>
-                        <td>{{ reservation.carId.type }}</td>
-                        <td>{{ reservation.carId.transmission }}</td>
-                        <td>{{ reservation.carId.fuelType }}</td>
-                        <td>{{ reservation.dateFrom }}</td>
-                        <td>{{ reservation.dateTo }}</td>
-                    </tr>
-                    {% endfor %}
-                {% endif %}
-            </tbody>
-        </table>
-    </div>
-
-    
-    <!-- Login screen if not authenticated -->
 
     {% else %}
         <!-- Login Screen if Not Authenticated -->
