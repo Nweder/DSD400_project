@@ -48,3 +48,5 @@ Har ändra och fixar om på Classer till cars och resevation.
 * Har även ändrat på html och vill se om jag kom åt databasen men det gick inte. 
 ____________________________________________________________________________________________________________
 >>>>>>> c6b35396324ca6cbba6c52ee7854ba88bbb838f7
+
+2025-03-05 Ändrat Djangos User till vår egna User model. Ändrat i settings.py, models.py, admin.py
