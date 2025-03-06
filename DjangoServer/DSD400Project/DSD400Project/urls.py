@@ -26,4 +26,6 @@ urlpatterns = [
     path('register/',views.registerPage,name='registerPage'),
     path('reservation/',views.reservePage,name='reservePage'),
     path('delete/<int:pk>',views.deleteReservation,name='deleteReservation'),
+    path('book/',views.bookPage,name='bookPage'),
+    path('bookCar/<int:pk>',views.bookCar,name='bookCar'),
 ]

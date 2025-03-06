@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>Car Booking System</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> <!-- Link to CSS -->
+    <script src="{% static 'js/main.js' %}" defer></script> <!-- Link to JS -->
+</head>
+<body>
+    <div class="logo-container">
+        <img src="{% static 'images/hv_logo.png' %}" alt="HV Logo" class="logo">
+    </div>
+    <h1>HV <br>Car Booking</h1>
+
+    <!-- HomePage (login / signup) -->
+    {% if user.is_authenticated %}
+
+    <div id="boxes">
+        <!-- welcome Text (debug so we know who is logged in) -->
+        <h2 id="authTitle">Welcome {{ user.username }}</h2>
+        
+         <!-- reserve list-->
+         <form method="POST" action="{% url 'reservePage' %}">
+            {% csrf_token %}
+            <button type="submit">Check Reservations</button>
+        </form>
+
+        <!-- Logout Form -->
+        <form method="POST" action="{% url 'logoutUser'%}">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+
+    <!-- Car Booking -->
+    <div id="boxes">
+        <form id="bookingForm">
+            <!-- Filter Choices -->
+            <label for="brand">Brand:</label>
+            <select id="brand" name="brand">
+                <option value="">-- Select All --</option>
+                <option value="Volvo">Volvo</option>
+                <option value="BMW">BMW</option>
+                <option value="Audi">Audi</option>
+            </select><br><br>
+
+            <label for="type">Type:</label>
+            <select id="type" name="type">
+                <option value="">-- Select All --</option>
+                <option value="SUV">SUV</option>
+                <option value="Sedan">Sedan</option>
+                <option value="Combi">Combi</option>
+            </select><br><br>
+
+            <label for="size">Size:</label>
+            <select id="size" name="size">
+                <option value="">-- Select All --</option>
+                <option value="small">small</option>
+                <option value="medium">medium</option>
+                <option value="big">big</option>
+            </select><br><br>
+
+            <label for="transmission">Transmission:</label>
+            <select id="transmission" name="transmission">
+                <option value="">-- Select All --</option>
+                <option value="automatic">automatic</option>
+                <option value="manual">manual</option>
+            </select><br><br>
+
+            <label for="fuelType">Fuel:</label>
+            <select id="fuelType" name="fuelType">
+                <option value="">-- Select All --</option>
+                <option value="gas">gas</option>
+                <option value="Electric">Electric</option>
+            </select><br><br>
+
+            <label for="dateFrom">Booking From:</label>
+            <input type="date" id="dateFrom" name="dateFrom"><br><br>
+            <label for="dateTo">Booking To:</label>
+            <input type="date" id="dateTo" name="dateTo"><br><br>
+
+            <!-- sort function -->
+            <button type="submit">Search</button>
+        </form>
+    </div>
+    {% endif %}
+<!-- Car display - only available cars -->
+<table id="reservationTable">
+    {% if cars %}
+    <thead>
+        <tr>
+            <th> </th>
+            <th>Brand</th>
+            <th>Size</th>
+            <th>Type</th>
+            <th>Transmission</th>
+            <th>Fuel Type</th>
+            <th>Date From</th>
+            <th>Date To</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for car in cars %}
+        {% if car.isAvailable == True %}
+        <tr>
+            <td>
+                <form method="POST" action="{% url 'bookCar' car.carId %}">
+                    {% csrf_token %}
+                    <button type="submit">Reserve</button>
+                </form>
+            </td>
+            <td>{{ car.brand }}</td>
+            <td>{{ car.type }}</td>
+            <td>{{ car.size }}</td>
+            <td>{{ car.transmission }}</td>
+            <td>{{ car.fuelType }}</td>
+            <td><p>date from - ej implementerad än<p/></td>
+            <td><p>date to - ej implementerad än<p/></td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </tbody>
+    {% endif %}
+
+</table>
+</body>
+</html>

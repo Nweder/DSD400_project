@@ -10,20 +10,26 @@
 <body>
     <div class="logo-container">
         <img src="{% static 'images/hv_logo.png' %}" alt="HV Logo" class="logo">
+        <h1>HV <br>Car Booking</h1>
     </div>
-    <h1>HV <br>Car Booking</h1>
-
+    
     <!-- HomePage (login / signup) -->
     {% if user.is_authenticated %}
 
     <div id="boxes">
         <!-- welcome Text (debug so we know who is logged in) -->
         <h2 id="authTitle">Welcome {{ user.username }}</h2>
-        
-         <!-- reserve list-->
+
+         <!-- reserve list -->
          <form method="POST" action="{% url 'reservePage' %}">
             {% csrf_token %}
             <button type="submit">Check Reservations</button>
+        </form>
+
+       <!-- BookPage -->
+       <form method="GET" action="{% url 'bookPage'%}">
+            {% csrf_token %}
+            <button type="submit">Book a car</button>
         </form>
 
         <!-- Logout Form -->
@@ -31,74 +37,6 @@
             {% csrf_token %}
             <button type="submit">Logout</button>
         </form>
-    </div>
-
-    <!-- Car Booking -->
-    <div id="boxes">
-        <form id="bookingForm">
-            <!-- Filter Choices -->
-            <label for="brand">Car Brand:</label>
-            <select id="brand" name="brand">
-                <option value="">-- Select Brand --</option>
-                <option value="Volvo">Volvo</option>
-                <option value="BMW">BMW</option>
-                <option value="Audi">Audi</option>
-            </select><br><br>
-
-            <label for="type">Car Type:</label>
-            <select id="type" name="type">
-                <option value="">-- Select Type --</option>
-                <option value="SUV">SUV</option>
-                <option value="Sedan">Sedan</option>
-                <option value="Combi">Combi</option>
-            </select><br><br>
-
-            <label for="size">Car Size:</label>
-            <select id="size" name="size">
-                <option value="">-- Select Size --</option>
-                <option value="small">small</option>
-                <option value="medium">medium</option>
-                <option value="big">big</option>
-            </select><br><br>
-
-            <label for="transmission">Transmission Type:</label>
-            <select id="transmission" name="transmission">
-                <option value="">-- Select Transmission Type --</option>
-                <option value="automatic">automatic</option>
-                <option value="manual">manual</option>
-            </select><br><br>
-
-            <label for="fuelType">Fuel Type:</label>
-            <select id="fuelType" name="fuelType">
-                <option value="">-- Select Fuel Type --</option>
-                <option value="gas">gas</option>
-                <option value="Electric">Electric</option>
-            </select><br><br>
-
-            <label for="dateFrom">Booking From:</label>
-            <input type="date" id="dateFrom" name="dateFrom"><br><br>
-            <label for="dateTo">Booking To:</label>
-            <input type="date" id="dateTo" name="dateTo"><br><br>
-
-            <!-- sortera sökfunktion, inte implementerad än -->
-            <button type="submit">Search</button>
-            <button type="reset">Reset</button>
-        </form>
-
-        {% for car in cars %}
-            {% if car.isAvailable == True %}
-            <div class="car">
-                <h3>{{ car.brand }} {{ car.type }}</h3>
-                <p>Size: {{ car.size }}</p>
-                <p>Transmission: {{ car.transmission }}</p>
-                <p>Fuel Type: {{ car.fuelType }}</p>
-
-                <!-- Reserve Button, inte implementerad än -->
-                <button class="reserveButton" data-carid="{{ car.id }}">Reserve</button>
-            </div>
-            {% endif %}
-        {% endfor %}
-
     </div>
 
     {% else %}

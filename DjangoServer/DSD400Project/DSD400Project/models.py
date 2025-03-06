@@ -24,8 +24,9 @@ class Reservation(models.Model):
     carId = models.ForeignKey(Car, on_delete=models.CASCADE)
     userId = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
 
-    startDate = models.DateField()
-    endDate = models.DateField()
+    startDate = models.DateField(auto_now=True) # sätter datumet till dagens datum, används tills vi implementerar kalender
+    endDate = models.DateField(auto_now=True) # sätter datumet till dagens datum, används tills vi implementerar kalender
+
 
     def clean(self):
         if Reservation.objects.filter(

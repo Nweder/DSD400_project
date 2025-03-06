@@ -20,10 +20,10 @@
         <!-- welcome Text (debug so we know who is logged in) -->
         <h2 id="authTitle">Reservations for {{ user.username }}</h2>
          
-        <!-- HomePage -->
-         <form method="GET" action="{% url 'homePage'%}">
+        <!-- BookPage -->
+         <form method="GET" action="{% url 'bookPage'%}">
             {% csrf_token %}
-            <button type="submit">Back to home</button>
+            <button type="submit">Book a car</button>
         </form>
         <!-- Logout Form -->
         <form method="POST" action="{% url 'logoutUser'%}">
@@ -58,8 +58,8 @@
                         </form>
                     </td>
                     <td>{{ reservation.carId.brand }}</td>
-                    <td>{{ reservation.carId.size }}</td>
                     <td>{{ reservation.carId.type }}</td>
+                    <td>{{ reservation.carId.size }}</td>
                     <td>{{ reservation.carId.transmission }}</td>
                     <td>{{ reservation.carId.fuelType }}</td>
                     <td>{{ reservation.dateFrom }}</td>
