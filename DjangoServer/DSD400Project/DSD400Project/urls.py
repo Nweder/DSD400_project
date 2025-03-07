@@ -28,4 +28,7 @@ urlpatterns = [
     path('delete/<int:pk>',views.deleteReservation,name='deleteReservation'),
     path('book/',views.bookPage,name='bookPage'),
     path('bookCar/<int:pk>',views.bookCar,name='bookCar'),
+    path('select-dates/', views.selectDatesPage, name='selectDatesPage'),
+    path('set-booking-dates/', views.setBookingDates, name='setBookingDates'),
+
 ]

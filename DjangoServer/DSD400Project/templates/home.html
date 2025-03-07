@@ -11,6 +11,8 @@
     <div class="logo-container">
         <img src="{% static 'images/hv_logo.png' %}" alt="HV Logo" class="logo">
         <h1>HV <br>Car Booking</h1>
+        <a href="{% url 'aboutPage' %}"><button>About</button></a>
+        
     </div>
     
     <!-- HomePage (login / signup) -->
@@ -18,18 +20,20 @@
 
     <div id="boxes">
         <!-- welcome Text (debug so we know who is logged in) -->
-        <h2 id="authTitle">Welcome {{ user.username }}</h2>
+        <h2 id="authTitle">Welcome {{ user.username }}</h2> 
+        <form method="GET" action="{% url 'selectDatesPage' %}">
+            <button type="submit">Select Dates for car rental </button>
+        </form>
 
          <!-- reserve list -->
          <form method="POST" action="{% url 'reservePage' %}">
             {% csrf_token %}
             <button type="submit">Check Reservations</button>
         </form>
-
        <!-- BookPage -->
        <form method="GET" action="{% url 'bookPage'%}">
             {% csrf_token %}
-            <button type="submit">Book a car</button>
+            <button type="submit">Car Meny</button>
         </form>
 
         <!-- Logout Form -->
@@ -37,6 +41,9 @@
             {% csrf_token %}
             <button type="submit">Logout</button>
         </form>
+
+
+
     </div>
 
     {% else %}

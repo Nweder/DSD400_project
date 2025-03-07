@@ -16,22 +16,21 @@ class Car(models.Model):
     size = models.CharField(max_length=50, choices={'small':'small','medium':'medium','big':'big'}) #storlek (liten, mellan, stor)
     transmission = models.CharField(max_length=50, choices={'automatic':'automatic','manual':'manual'}) #växellåda - automat eller manuell
     fuelType = models.CharField(max_length=50, choices={'gas':'gas','electric':'electric'}) #bränsle - bensin, diesel, el, etc
-
     isAvailable = models.BooleanField(default=True)
 
 class Reservation(models.Model):
     reservationId = models.AutoField(primary_key=True)
     carId = models.ForeignKey(Car, on_delete=models.CASCADE)
     userId = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+    startDate = models.DateField() # sätter datumet till dagens datum, används tills vi implementerar kalender
+    endDate = models.DateField() # sätter datumet till dagens datum, används tills vi implementerar kalender
 
-    startDate = models.DateField(auto_now=True) # sätter datumet till dagens datum, används tills vi implementerar kalender
-    endDate = models.DateField(auto_now=True) # sätter datumet till dagens datum, används tills vi implementerar kalender
 
 
-    def clean(self):
-        if Reservation.objects.filter(
-            carId=self.carId,
-            startDate__lt=self.endDate,
-            endDate__gt=self.startDate,
-        ).exists():
-            raise ValidationError("Denna bil är redan bokad under denna period {startDate__lt} {endDate__gt} .")
+    # def clean(self):
+    #     if Reservation.objects.filter(
+    #         carId=self.carId,
+    #         startDate__lt=self.endDate,
+    #         endDate__gt=self.startDate,
+    #     ).exists():
+    #         raise ValidationError("Denna bil är redan bokad under denna period {startDate__lt} {endDate__gt} .")
