@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-$u*t=iex)z=t$*-1y)bp_o)cq03p&yp$7ynjj)vy4i85q&hokm
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['13.61.166.221', '127.0.0.1']
 
 
 # Application definition
@@ -79,12 +79,12 @@ WSGI_APPLICATION = 'DSD400Project.wsgi.application'
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.mysql", 
+        "ENGINE": "django.db.backends.postgresql_psycopy2", 
         "NAME": "dsd400",  
-        "USER": "root", 
-        "PASSWORD": "12345",  
+        "USER": "postgres", 
+        "PASSWORD": "flmh4885",  
         "HOST": "127.0.0.1",  
-        "PORT": "3306",
+        "PORT": "5432",
     }
 }
 
