@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'DSD400Project.wsgi.application'
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopy2", 
+        "ENGINE": "django.db.backends.postgresql", 
         "NAME": "dsd400",  
         "USER": "postgres", 
         "PASSWORD": "flmh4885",  
