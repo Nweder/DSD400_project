@@ -79,12 +79,12 @@ WSGI_APPLICATION = 'DSD400Project.wsgi.application'
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql", 
+        "ENGINE": "django.db.backends.mysql", 
         "NAME": "dsd400",  
-        "USER": "postgres", 
-        "PASSWORD": "flmh4885",  
+        "USER": "root", 
+        "PASSWORD": "12345",  
         "HOST": "127.0.0.1",  
-        "PORT": "5432",
+        "PORT": "3306",
     }
 }
 
