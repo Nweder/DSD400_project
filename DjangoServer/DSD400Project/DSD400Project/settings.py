@@ -80,10 +80,10 @@ WSGI_APPLICATION = 'DSD400Project.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql", 
-        "NAME": "dsd400",  
-        "USER": "root", 
-        "PASSWORD": "12345",  
-        "HOST": "127.0.0.1",  
+        "NAME": "dsd400db",  
+        "USER": "admin", 
+        "PASSWORD": "flmn4885",  
+        "HOST": "dsd400db.ct2qwwigcgsb.eu-north-1.rds.amazonaws.com",  
         "PORT": "3306",
     }
 }
