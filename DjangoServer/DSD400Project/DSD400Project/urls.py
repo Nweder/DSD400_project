@@ -31,4 +31,4 @@ urlpatterns = [
     path('select-dates/', views.selectDatesPage, name='selectDatesPage'),
     path('set-booking-dates/', views.setBookingDates, name='setBookingDates'),
 
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
