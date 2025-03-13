@@ -41,40 +41,42 @@
             <label for="brand">Brand:</label>
             <select id="brand" name="brand">
                 <option value="">-- Select All --</option>
-                <option value="Volvo">Volvo</option>
-                <option value="BMW">BMW</option>
-                <option value="Audi">Audi</option>
-            </select><br><br>
-
+                <option value="Volvo" {% if request.GET.brand == "Volvo" %}selected{% endif %}>Volvo</option>
+                <option value="BMW" {% if request.GET.brand == "BMW" %}selected{% endif %}>BMW</option>
+                <option value="Audi" {% if request.GET.brand == "Audi" %}selected{% endif %}>Audi</option>
+            </select>
+        
             <label for="type">Type:</label>
             <select id="type" name="type">
                 <option value="">-- Select All --</option>
-                <option value="SUV">SUV</option>
-                <option value="Sedan">Sedan</option>
-                <option value="Combi">Combi</option>
-            </select><br><br>
-
+                <option value="SUV" {% if request.GET.type == "SUV" %}selected{% endif %}>SUV</option>
+                <option value="Sedan" {% if request.GET.type == "Sedan" %}selected{% endif %}>Sedan</option>
+                <option value="Combi" {% if request.GET.type == "Combi" %}selected{% endif %}>Combi</option>
+            </select>
+        
             <label for="size">Size:</label>
             <select id="size" name="size">
                 <option value="">-- Select All --</option>
-                <option value="small">small</option>
-                <option value="medium">medium</option>
-                <option value="big">big</option>
-            </select><br><br>
-
+                <option value="small" {% if request.GET.size == "small" %}selected{% endif %}>Small</option>
+                <option value="medium" {% if request.GET.size == "medium" %}selected{% endif %}>Medium</option>
+                <option value="big" {% if request.GET.size == "big" %}selected{% endif %}>Big</option>
+            </select>
+        
             <label for="transmission">Transmission:</label>
             <select id="transmission" name="transmission">
                 <option value="">-- Select All --</option>
-                <option value="automatic">automatic</option>
-                <option value="manual">manual</option>
-            </select><br><br>
-
+                <option value="automatic" {% if request.GET.transmission == "automatic" %}selected{% endif %}>Automatic</option>
+                <option value="manual" {% if request.GET.transmission == "manual" %}selected{% endif %}>Manual</option>
+            </select>
+        
             <label for="fuelType">Fuel Type:</label>
             <select id="fuelType" name="fuelType">
                 <option value="">-- Select All --</option>
-                <option value="gas">gas</option>
-                <option value="Electric">Electric</option>
-            </select><br><br>
+                <option value="gas" {% if request.GET.fuelType == "gas" %}selected{% endif %}>Gas</option>
+                <option value="electric" {% if request.GET.fuelType == "electric" %}selected{% endif %}>Electric</option>
+            </select>
+        
+            <button type="submit">Filter</button>
         </form>
 
         <form method="POST" action="{% url 'logoutUser' %}">
@@ -120,7 +122,6 @@
                         <form method="POST" action="{% url 'bookCar' car.carId %}">
                             {% csrf_token %}
                         
-                            <!-- Visa de valda datumen -->
                             <label for="dateFrom">Booking From:</label>
                             <input type="date" id="dateFrom" name="dateFrom" value="{{ dateFrom }}" readonly><br><br>
                         
