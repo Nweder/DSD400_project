@@ -5,7 +5,7 @@ from .forms import SignUpForm
 from .models import Reservation, Car
 from datetime import datetime
 from django.contrib import messages
-
+from django.db import transaction
 
 
 def homePage(request):
@@ -25,14 +25,15 @@ def aboutPage(request):
 
 def registerPage(request):
     if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username') # Authenticate and login
-            password = form.cleaned_data.get('password1')
-            user = authenticate(request, username=username, password=password)
-            login(request, user)
-            return redirect(reverse('homePage'))
+        with transaction.atomic():
+            form = SignUpForm(request.POST)
+            if form.is_valid():
+                form.save()
+                username = form.cleaned_data.get('username') # Authenticate and login
+                password = form.cleaned_data.get('password1')
+                user = authenticate(request, username=username, password=password)
+                login(request, user)
+                return redirect(reverse('homePage'))
     else:
         form = SignUpForm()
         return render(request, 'register.html', {'form': form})
@@ -95,8 +96,7 @@ def bookPage(request):
 
 def bookCar(request, pk):
     if request.user.is_authenticated:
-
-        # car = get_object_or_404(Car, carId=pk)
+        
         car = Car.objects.filter(carId=pk).first() 
         date_from = request.session.get('dateFrom', None)
         date_to = request.session.get('dateTo', None)
@@ -110,14 +110,14 @@ def bookCar(request, pk):
         except ValueError:
             messages.error(request, "Invalid date format. Please try again.")
             return redirect(reverse('selectDatesPage'))
-
-        reservation = Reservation(userId=request.user, carId=car, startDate=date_from, endDate=date_to)
-        reservation.save()
-        car.isAvailable = False
-        car.save()
-        
-        messages.success(request, "Car has been booked successfully!")
-        return redirect(reverse('bookPage'))
+        with transaction.atomic():
+            reservation = Reservation(userId=request.user, carId=car, startDate=date_from, endDate=date_to)
+            reservation.save()
+            car.isAvailable = False
+            car.save()
+            
+            messages.success(request, "Car has been booked successfully!")
+            return redirect(reverse('bookPage'))
     else:
         messages.error(request, "You need to be logged in to book a car.")
         return redirect(reverse('homePage'))
