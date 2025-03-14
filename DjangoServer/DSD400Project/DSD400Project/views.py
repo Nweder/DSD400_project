@@ -110,13 +110,16 @@ def bookCar(request, pk):
         except ValueError:
             messages.error(request, "Invalid date format. Please try again.")
             return redirect(reverse('selectDatesPage'))
-        with transaction.atomic():
+        if car.isAvaiable == True:
             reservation = Reservation(userId=request.user, carId=car, startDate=date_from, endDate=date_to)
             reservation.save()
             car.isAvailable = False
             car.save()
             
             messages.success(request, "Car has been booked successfully!")
+            return redirect(reverse('bookPage'))
+        else:
+            messages.success(request, "This car is not available anymore. Please try again!")
             return redirect(reverse('bookPage'))
     else:
         messages.error(request, "You need to be logged in to book a car.")
