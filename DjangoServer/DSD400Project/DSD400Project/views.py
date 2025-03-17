@@ -6,6 +6,7 @@ from .models import Reservation, Car
 from datetime import datetime
 from django.contrib import messages
 from django.db import transaction
+from django.db.models import Q
 
 
 def homePage(request):
@@ -76,7 +77,10 @@ def bookPage(request):
         transmission = request.GET.get('transmission', '')
         fuel_type = request.GET.get('fuelType', '')
 
-        cars = Car.objects.filter(isAvailable=True)
+        cars = Car.objects.filter(
+            ~Q(reservation__startDate__lt=date_to, reservation__endDate__gt=date_from)
+        ).distinct()        
+
 
         if brand:
             cars = cars.filter(brand=brand)

@@ -25,6 +25,13 @@
             {% csrf_token %}
             <button type="submit">Book a car</button>
         </form>
+
+        <!-- Home Form -->
+        <form method="GET" action="{% url 'homePage'%}">
+            {% csrf_token %}
+            <button type="submit">Home</button>
+        </form>
+        
         <!-- Logout Form -->
         <form method="POST" action="{% url 'logoutUser'%}">
             {% csrf_token %}

@@ -103,6 +103,15 @@
             <tbody>
                 {% for car in cars %}
                 <tr>
+                    <td>
+                        {% if car.brand == "Audi" %}
+                            <img src="{% static 'images/audi.png' %}" alt="Audi" class="car-image">
+                        {% elif car.brand == "Volvo" %}
+                            <img src="{% static 'images/volvo.png' %}" alt="Volvo" class="car-image">
+                        {% elif car.brand == "BMW" %}
+                            <img src="{% static 'images/bmw.png' %}" alt="BMW" class="car-image">
+                        {% endif %}
+                    </td>
                     <td>{{ car.brand }}</td>
                     <td>{{ car.size }}</td>
                     <td>{{ car.type }}</td>
