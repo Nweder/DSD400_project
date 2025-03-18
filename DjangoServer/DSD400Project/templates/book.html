@@ -96,9 +96,7 @@
                     <th>Type</th>
                     <th>Transmission</th>
                     <th>Fuel Type</th>
-                    <th>Available From</th>
-                    <th>Available Until</th>
-                    <th>Action</th>
+                    <th>Date</th>
                 </tr>
             </thead>
             <tbody>
@@ -118,16 +116,6 @@
                     <td>{{ car.type }}</td>
                     <td>{{ car.transmission }}</td>
                     <td>{{ car.fuelType }}</td>
-                    <td>
-                        {% with car.reservations.all|first as res %}
-                            {% if res %} {{ res.startDate|date:"Y-m-d" }} {% else %} Available {% endif %}
-                        {% endwith %}
-                    </td>
-                    <td>
-                        {% with car.reservations.all|last as res %}
-                            {% if res %} {{ res.endDate|date:"Y-m-d" }} {% else %} Available {% endif %}
-                        {% endwith %}
-                    </td>
                     <td>
                         <form method="POST" action="{% url 'bookCar' car.carId %}">
                             {% csrf_token %}
