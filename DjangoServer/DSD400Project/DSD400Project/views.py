@@ -114,7 +114,7 @@ def bookCar(request, pk):
         except ValueError:
             messages.error(request, "Invalid date format. Please try again.")
             return redirect(reverse('selectDatesPage'))
-        if car.isAvailable == True:
+        if not reservation.objects.filter(carId=car, startDate__lt=date_to, endDate__gt=date_from).exists():
             reservation = Reservation(userId=request.user, carId=car, startDate=date_from, endDate=date_to)
             reservation.save()
             car.isAvailable = False
