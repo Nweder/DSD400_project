@@ -5,8 +5,8 @@ from .forms import SignUpForm
 from .models import Reservation, Car
 from datetime import datetime
 from django.contrib import messages
-from django.db import transaction
 from django.db.models import Q
+
 
 
 def homePage(request):
@@ -26,15 +26,14 @@ def aboutPage(request):
 
 def registerPage(request):
     if request.method == 'POST':
-        with transaction.atomic():
-            form = SignUpForm(request.POST)
-            if form.is_valid():
-                form.save()
-                username = form.cleaned_data.get('username') # Authenticate and login
-                password = form.cleaned_data.get('password1')
-                user = authenticate(request, username=username, password=password)
-                login(request, user)
-                return redirect(reverse('homePage'))
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username') # Authenticate and login
+            password = form.cleaned_data.get('password1')
+            user = authenticate(request, username=username, password=password)
+            login(request, user)
+            return redirect(reverse('homePage'))
     else:
         form = SignUpForm()
         return render(request, 'register.html', {'form': form})
@@ -76,12 +75,15 @@ def bookPage(request):
         size = request.GET.get('size', '')
         transmission = request.GET.get('transmission', '')
         fuel_type = request.GET.get('fuelType', '')
-        
+
         cars = Car.objects.exclude(
             reservation__startDate__lt=date_to,
             reservation__endDate__gt=date_from
-        ).distinct()  
+        ).distinct()        
 
+        # cars = Car.objects.filter(
+        #     ~Q(reservation__startDate__lt=date_to, reservation__endDate__gt=date_from)
+        # ).distinct()
 
         if brand:
             cars = cars.filter(brand=brand)
@@ -101,7 +103,8 @@ def bookPage(request):
 
 def bookCar(request, pk):
     if request.user.is_authenticated:
-        
+
+        # car = get_object_or_404(Car, carId=pk)
         car = Car.objects.filter(carId=pk).first() 
         date_from = request.session.get('dateFrom', None)
         date_to = request.session.get('dateTo', None)
@@ -115,17 +118,15 @@ def bookCar(request, pk):
         except ValueError:
             messages.error(request, "Invalid date format. Please try again.")
             return redirect(reverse('selectDatesPage'))
-            
-            reservation = Reservation(userId=request.user, carId=car, startDate=date_from, endDate=date_to)
-            reservation.save()
-            car.isAvailable = False
-            car.save()
-            
-            messages.success(request, "Car has been booked successfully!")
-            return redirect(reverse('bookPage'))
-        else:
-            messages.success(request, "This car is not available anymore. Please try again!")
-            return redirect(reverse('bookPage'))
+
+        # if car.isAvailable == True or car.isAvailable == False and date not == current date:
+        reservation = Reservation(userId=request.user, carId=car, startDate=date_from, endDate=date_to)
+        reservation.save() 
+        car.isAvailable = False
+        car.save()
+        
+        messages.success(request, "Car has been booked successfully!")
+        return redirect(reverse('bookPage'))
     else:
         messages.error(request, "You need to be logged in to book a car.")
         return redirect(reverse('homePage'))
@@ -146,3 +147,5 @@ def setBookingDates(request):
         return redirect(reverse("bookPage"))  
 
     return render(request, "select_dates.html")
+
+
