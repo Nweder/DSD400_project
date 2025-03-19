@@ -45,6 +45,7 @@
                 <option value="BMW" {% if request.GET.brand == "BMW" %}selected{% endif %}>BMW</option>
                 <option value="Audi" {% if request.GET.brand == "Audi" %}selected{% endif %}>Audi</option>
             </select>
+        </br>
         
             <label for="type">Type:</label>
             <select id="type" name="type">
@@ -53,6 +54,7 @@
                 <option value="Sedan" {% if request.GET.type == "Sedan" %}selected{% endif %}>Sedan</option>
                 <option value="Combi" {% if request.GET.type == "Combi" %}selected{% endif %}>Combi</option>
             </select>
+        </br>
         
             <label for="size">Size:</label>
             <select id="size" name="size">
@@ -61,14 +63,16 @@
                 <option value="medium" {% if request.GET.size == "medium" %}selected{% endif %}>Medium</option>
                 <option value="big" {% if request.GET.size == "big" %}selected{% endif %}>Big</option>
             </select>
-        
+        </br>
+            
             <label for="transmission">Transmission:</label>
             <select id="transmission" name="transmission">
                 <option value="">-- Select All --</option>
                 <option value="automatic" {% if request.GET.transmission == "automatic" %}selected{% endif %}>Automatic</option>
                 <option value="manual" {% if request.GET.transmission == "manual" %}selected{% endif %}>Manual</option>
             </select>
-        
+         </br>
+            
             <label for="fuelType">Fuel Type:</label>
             <select id="fuelType" name="fuelType">
                 <option value="">-- Select All --</option>
