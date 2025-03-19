@@ -76,10 +76,11 @@ def bookPage(request):
         size = request.GET.get('size', '')
         transmission = request.GET.get('transmission', '')
         fuel_type = request.GET.get('fuelType', '')
-
-        cars = Car.objects.filter(
-            ~Q(reservation__startDate__lt=date_to, reservation__endDate__gt=date_from)
-        ).distinct()        
+        
+        cars = Car.objects.exclude(
+            reservation__startDate__lt=date_to,
+            reservation__endDate__gt=date_from
+        ).distinct()  
 
 
         if brand:
