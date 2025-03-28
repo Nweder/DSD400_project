@@ -81,10 +81,6 @@ def bookPage(request):
             reservation__endDate__gt=date_from
         ).distinct()        
 
-        # cars = Car.objects.filter(
-        #     ~Q(reservation__startDate__lt=date_to, reservation__endDate__gt=date_from)
-        # ).distinct()
-
         if brand:
             cars = cars.filter(brand=brand)
         if car_type:
@@ -117,7 +113,7 @@ def bookCar(request, pk):
             messages.error(request, "Invalid date format. Please try again.")
             return redirect(reverse('selectDatesPage'))
 
-        # Kontrollera att bilen inte redan är bokad i det valda intervallet
+
         overlapping_reservations = Reservation.objects.filter(
             carId=car,
             startDate__lt=date_to,
@@ -128,7 +124,7 @@ def bookCar(request, pk):
             messages.error(request, "Sorry, this car is no longer available for the selected dates.")
             return redirect(reverse('bookPage'))
 
-        # Om bilen är tillgänglig: spara bokningen
+
         reservation = Reservation(userId=request.user, carId=car, startDate=date_from, endDate=date_to)
         reservation.save()
 
@@ -139,36 +135,6 @@ def bookCar(request, pk):
         messages.error(request, "You need to be logged in to book a car.")
         return redirect(reverse('homePage'))
 
-#def bookCar(request, pk):
- #   if request.user.is_authenticated:
-
-        # car = get_object_or_404(Car, carId=pk)
-  #      car = Car.objects.filter(carId=pk).first() 
-   #     date_from = request.session.get('dateFrom', None)
-    #    date_to = request.session.get('dateTo', None)
-
-     #   if not date_from or not date_to:
-      #      messages.error(request, "You must select a date before booking a car.")
-       #     return redirect(reverse('selectDatesPage'))
-        #try:
-         #   date_from = datetime.strptime(date_from, '%Y-%m-%d').date()
-          #  date_to = datetime.strptime(date_to, '%Y-%m-%d').date()
-        #except ValueError:
-         #   messages.error(request, "Invalid date format. Please try again.")
-          #  return redirect(reverse('selectDatesPage'))
-
-        # if car.isAvailable == True or car.isAvailable == False and date not == current date:
-        #reservation = Reservation(userId=request.user, carId=car, startDate=date_from, endDate=date_to)
-        #reservation.save() 
-        #car.isAvailable = False
-        #car.save()
-        
-        #messages.success(request, "Car has been booked successfully!")
-        #return redirect(reverse('bookPage'))
-    #else:
-     #   messages.error(request, "You need to be logged in to book a car.")
-      #  return redirect(reverse('homePage'))
-    
 
 def selectDatesPage(request):
     return render(request, 'select_dates.html')
